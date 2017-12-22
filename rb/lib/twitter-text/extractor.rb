@@ -1,5 +1,4 @@
 # encoding: utf-8
-require 'idn'
 
 class String
   # Helper function to count the character length by first converting to an
@@ -344,10 +343,6 @@ module Twitter
       def is_valid_domain(url_length, domain, protocol)
         begin
           raise ArgumentError.new("invalid empty domain") unless domain
-          original_domain_length = domain.length
-          encoded_domain = IDN::Idna.toASCII(domain)
-          updated_domain_length = encoded_domain.length
-          url_length += (updated_domain_length - original_domain_length) if (updated_domain_length > original_domain_length)
           url_length += URL_PROTOCOL_LENGTH unless protocol
           url_length <= MAX_URL_LENGTH
         rescue Exception
